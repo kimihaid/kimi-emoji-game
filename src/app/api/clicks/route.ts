@@ -4,6 +4,10 @@ import path from 'path';
 
 const CLICKS_FILE = path.join(process.cwd(), 'data', 'clicks.json');
 
+// In-memory storage for production environments where filesystem is read-only
+let memoryStore = { total: 0, lastUpdated: new Date().toISOString() };
+let useMemoryStore = false;
+
 // Ensure data directory exists
 function ensureDataDir() {
   const dataDir = path.dirname(CLICKS_FILE);
@@ -12,33 +16,58 @@ function ensureDataDir() {
   }
 }
 
-// Read clicks from file
+// Read clicks from file or memory
 function readClicks(): { total: number; lastUpdated: string } {
+  // If we're already using memory store, return it
+  if (useMemoryStore) {
+    return memoryStore;
+  }
+  
   ensureDataDir();
   
   if (!fs.existsSync(CLICKS_FILE)) {
     const initialData = { total: 0, lastUpdated: new Date().toISOString() };
-    fs.writeFileSync(CLICKS_FILE, JSON.stringify(initialData, null, 2));
+    try {
+      fs.writeFileSync(CLICKS_FILE, JSON.stringify(initialData, null, 2));
+    } catch (error) {
+      console.log('File system is read-only, switching to memory storage');
+      useMemoryStore = true;
+      memoryStore = initialData;
+      return initialData;
+    }
     return initialData;
   }
   
   try {
     const data = fs.readFileSync(CLICKS_FILE, 'utf8');
-    return JSON.parse(data);
+    const parsedData = JSON.parse(data);
+    // Initialize memory store with file data
+    memoryStore = parsedData;
+    return parsedData;
   } catch (error) {
     console.error('Error reading clicks file:', error);
-    return { total: 0, lastUpdated: new Date().toISOString() };
+    useMemoryStore = true;
+    return memoryStore;
   }
 }
 
-// Write clicks to file
+// Write clicks to file or memory
 function writeClicks(data: { total: number; lastUpdated: string }) {
+  // Update memory store first
+  memoryStore = data;
+  
+  // If we're using memory store only, don't try to write to file
+  if (useMemoryStore) {
+    return;
+  }
+  
   ensureDataDir();
   
   try {
     fs.writeFileSync(CLICKS_FILE, JSON.stringify(data, null, 2));
   } catch (error) {
-    console.error('Error writing clicks file:', error);
+    console.log('Cannot write to file system, switching to memory-only storage');
+    useMemoryStore = true;
   }
 }
 

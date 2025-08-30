@@ -46,8 +46,13 @@ export default function EmojiSoundDesigner() {
       const counters = await ClickCounter.getBothCounters();
       setUserClicks(counters.userClicks);
       setGlobalClicks(counters.globalClicks);
+      console.log('Counters loaded:', counters); // Debug log
     } catch (error) {
       console.error('Error loading counters:', error);
+      // Fallback to localStorage only if API fails
+      const userClicks = ClickCounter.getUserClicks();
+      setUserClicks(userClicks);
+      setGlobalClicks(0); // Default global clicks if API fails
     }
   };
 
@@ -107,9 +112,17 @@ export default function EmojiSoundDesigner() {
         
         if (source) {
           // Increment both counters
-          const counters = await ClickCounter.incrementBothCounters();
-          setUserClicks(counters.userClicks);
-          setGlobalClicks(counters.globalClicks);
+          try {
+            const counters = await ClickCounter.incrementBothCounters();
+            console.log('Counters after increment:', counters); // Debug log
+            setUserClicks(counters.userClicks);
+            setGlobalClicks(counters.globalClicks);
+          } catch (error) {
+            console.error('Error incrementing counters:', error);
+            // Fallback to just user clicks if API fails
+            const userClicks = ClickCounter.incrementUserClicks();
+            setUserClicks(userClicks);
+          }
 
           showMessage(`🎵 Playing ${currentEmoji} sound!`, 'success');
           
@@ -230,6 +243,13 @@ export default function EmojiSoundDesigner() {
           globalClicks={globalClicks}
           onReset={resetUserCounter}
         />
+        
+        {/* Debug info - remove in production */}
+        {process.env.NODE_ENV === 'development' && (
+          <div className="text-center mb-4 text-white/60 text-sm">
+            Debug: User={userClicks}, Global={globalClicks}
+          </div>
+        )}
 
         {/* Main Emoji Display - Made smaller */}
         <div className="text-center mb-12 relative">
