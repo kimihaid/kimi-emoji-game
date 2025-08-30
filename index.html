@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Sound Designer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎵 Emoji Sound Designer</h1>
+            <p>Click any emoji to hear its cartoon sound effect!</p>
+        </header>
+
+        <main>
+            <div class="emoji-display">
+                <button class="giant-emoji-btn" id="giantEmojiBtn">
+                    🔔
+                </button>
+                <div class="controls">
+                    <button class="play-btn" id="playBtn">▶️ Play Sound</button>
+                    <button class="download-btn" id="downloadBtn">💾 Download WAV</button>
+                </div>
+            </div>
+
+            <div class="emoji-selector">
+                <h3>Choose Your Emoji:</h3>
+                <div class="emoji-grid" id="emojiGrid">
+                    <!-- Emojis will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="custom-emoji">
+                <h3>Or Enter Any Emoji:</h3>
+                <input type="text" id="customEmojiInput" placeholder="🎉" maxlength="2">
+                <button id="useCustomBtn">Use This Emoji</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>Sound effects are generated using Web Audio API</p>
+        </footer>
+    </div>
+
+    <script src="audio-engine.js"></script>
+    <script src="emoji-mappings.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

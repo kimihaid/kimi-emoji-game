@@ -1,0 +1,229 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.emoji-display {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.giant-emoji-btn {
+    font-size: 8rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 20px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.giant-emoji-btn:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.giant-emoji-btn:active {
+    transform: scale(0.95);
+}
+
+.controls {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.play-btn, .download-btn {
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.play-btn {
+    background: #4CAF50;
+    color: white;
+}
+
+.download-btn {
+    background: #2196F3;
+    color: white;
+}
+
+.play-btn:hover, .download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.emoji-selector {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.emoji-selector h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.emoji-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 15px;
+    justify-items: center;
+}
+
+.emoji-option {
+    font-size: 3rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.emoji-option:hover {
+    transform: scale(1.2);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.emoji-option.selected {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.custom-emoji {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+}
+
+.custom-emoji h3 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+#customEmojiInput {
+    font-size: 2rem;
+    padding: 15px;
+    border: none;
+    border-radius: 15px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.9);
+    margin-right: 15px;
+    width: 80px;
+}
+
+#useCustomBtn {
+    padding: 15px 25px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 15px;
+    background: #FF9800;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+#useCustomBtn:hover {
+    background: #F57C00;
+    transform: translateY(-2px);
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+/* Loading animation */
+.loading {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid transparent;
+    border-top: 2px solid #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .giant-emoji-btn {
+        font-size: 6rem;
+    }
+    
+    .controls {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .emoji-grid {
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    }
+    
+    .emoji-option {
+        font-size: 2rem;
+    }
+}
