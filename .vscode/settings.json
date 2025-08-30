@@ -1,0 +1,20 @@
+{
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell",
+      "args": ["-NoLogo"]
+    },
+    "Git Bash": {
+      "path": "C:\\Program Files\\Git\\bin\\bash.exe",
+      "icon": "terminal-bash"
+    }
+  },
+  "terminal.integrated.inheritEnv": true,
+  "terminal.integrated.env.windows": {
+    "PATH": "${env:PATH};C:\\Program Files\\nodejs"
+  },
+  "terminal.integrated.cwd": "${workspaceFolder}",
+  "terminal.integrated.allowWorkspaceConfiguration": true
+}

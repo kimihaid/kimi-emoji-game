@@ -3,10 +3,14 @@ export class AudioEngine {
   private audioContext: AudioContext | null = null;
   private masterGain: GainNode | null = null;
   private currentBuffer: AudioBuffer | null = null;
-  private sampleRate = 44100;
+  public sampleRate = 44100;
 
   constructor() {
     this.initAudioContext();
+  }
+
+  public get context() {
+    return this.audioContext;
   }
 
   private initAudioContext(): void {

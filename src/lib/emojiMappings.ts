@@ -137,10 +137,10 @@ export class EmojiSoundMapper {
     const chirp1 = this.audioEngine.generateSweep(2000, 3000, 0.2, 'sine');
     const chirp2 = this.audioEngine.generateSweep(2500, 3500, 0.15, 'sine');
     
-    if (!chirp1 || !chirp2 || !this.audioEngine.audioContext) return null;
+    if (!chirp1 || !chirp2 || !this.audioEngine.context) return null;
 
     const totalLength = Math.floor(0.8 * this.audioEngine.sampleRate);
-    const combined = this.audioEngine.audioContext.createBuffer(1, totalLength, this.audioEngine.sampleRate);
+    const combined = this.audioEngine.context.createBuffer(1, totalLength, this.audioEngine.sampleRate);
     const combinedData = combined.getChannelData(0);
     
     const data1 = chirp1.getChannelData(0);
